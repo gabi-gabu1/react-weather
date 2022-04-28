@@ -1,11 +1,13 @@
 import axios from "axios";
 import React, { useState } from "react";
-import FormattedDate from "./FormattedDate";
+
+import WeatherInfo from "./WeatherInfo";
 import "./App.css";
 
-export default function Weather() {
+export default function Weather(props) {
   const [ready, setReady] = useState(false);
   const [weatherData, setWeatherData] = useState({});
+  const [city, setCity] = useState(props.defaultCity);
 
   function showForecast(response) {
     console.log(response);
@@ -17,132 +19,44 @@ export default function Weather() {
       description: response.data.weather[0].description,
       city: response.data.name,
       date: new Date(response.data.dt * 1000),
-      iconUrl:
-        "https://cdn2.iconfinder.com/data/icons/weather-flat-14/64/weather02-1024.png",
+      iconUrl: `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
     });
+  }
+  function search() {
+    const apiKey = "a592e749eb4eda83dffcd2b9176f3c7f";
+    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+    axios.get(apiUrl).then(showForecast);
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    search();
+  }
+
+  function changeCity(event) {
+    setCity(event.target.value);
   }
 
   if (ready) {
     return (
       <div className="container">
         <div className="container-wrapper">
-          <div className="row search">
-            <div className="col-6">
-              <form />
-              <input
-                className="form-control mb-4 city-input"
-                type="text"
-                placeholder="Enter a city"
-                autoComplete="off"
-                autoFocus
-              />
-            </div>
-            <div className="col-3">
-              <input
-                type="submit"
-                value="Search"
-                className="search-button btn btn-primary w-100"
-              />
-            </div>
-            <div className="col-3">
-              <input
-                type="submit"
-                value="Current"
-                className="search-button btn btn-success w-100"
-              />
-            </div>
-          </div>
-
-          <div className="row">
-            <div className="col-5 prague">
-              <h1 className="city-prague">{weatherData.city}</h1>
-
-              <ul>
-                <li className="date">
-                  <FormattedDate date={weatherData.date} />
-                </li>
-
-                <li>
-                  <span>{weatherData.description}</span>
-                </li>
-              </ul>
-              <ul>
-                <li>
-                  Humidity: <span> {weatherData.humidity} </span>%
-                </li>
-                <li>
-                  Wind: <span>{weatherData.wind}</span>km/hr
-                </li>
-              </ul>
-            </div>
-
-            <div className="col-3 weather-icon">
-              <li>
-                <img
-                  src={weatherData.iconUrl}
-                  width="80px"
-                  alt={weatherData.description}
-                  className="icon"
-                />
-              </li>
-            </div>
-            <div className="col-4 temperature-container">
-              <span className="temperature-prague">
-                {weatherData.temperature}
-              </span>
-              <span className="units">°C</span>
-            </div>
-          </div>
-
-          <div className="forecast-days mt-4">
-            <div className="row">
-              <div className="col">
-                <p>Fri</p>
-                <img
-                  src="https://cdn2.iconfinder.com/data/icons/weather-flat-14/64/weather02-1024.png"
-                  width="50px"
-                  alt="icon"
-                  className="icon"
+          <form onSubmit={handleSubmit}>
+            <div className="row mb-4">
+              <div className="col-8">
+                <input
+                  type="text"
+                  placeholder="Type a city.."
+                  className="form-control"
+                  onChange={changeCity}
                 />
               </div>
-              <div className="col">
-                <p>Sat</p>
-                <img
-                  src="https://cdn2.iconfinder.com/data/icons/weather-flat-14/64/weather02-1024.png"
-                  width="50px"
-                  alt="icon"
-                  className="icon"
-                />
-              </div>
-              <div className="col">
-                <p>Sun</p>
-                <img
-                  src="https://cdn2.iconfinder.com/data/icons/weather-flat-14/64/weather02-1024.png"
-                  width="50px"
-                  alt="icon"
-                  className="icon"
-                />
-              </div>
-              <div className="col">
-                <p>Mon</p>
-                <img
-                  src="https://cdn2.iconfinder.com/data/icons/weather-flat-14/64/weather02-1024.png"
-                  width="50px"
-                  alt="icon"
-                  className="icon"
-                />
-              </div>
-              <div className="col">
-                <p>Tue</p>
-                <img
-                  src="https://cdn2.iconfinder.com/data/icons/weather-flat-14/64/weather02-1024.png"
-                  width="50px"
-                  alt="icon"
-                  className="icon"
-                />
+              <div className="col-4">
+                <input type="submit" className="btn btn-primary" />
               </div>
             </div>
-          </div>
+          </form>
+          <WeatherInfo data={weatherData} />
         </div>
 
         <p className="open-source">
@@ -158,10 +72,7 @@ export default function Weather() {
       </div>
     );
   } else {
-    let city = "Miami";
-    const apiKey = "a592e749eb4eda83dffcd2b9176f3c7f";
-    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
-    axios.get(apiUrl).then(showForecast);
+    search();
     return "Loading..";
   }
 }
