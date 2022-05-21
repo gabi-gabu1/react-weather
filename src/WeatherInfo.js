@@ -42,56 +42,6 @@ export default function WeatherInfo(props) {
           <WeatherTemperature celsius={props.data.temperature} />
         </div>
       </div>
-
-      <div className="forecast-days mt-4">
-        <div className="row">
-          <div className="col">
-            <p>Fri</p>
-            <img
-              src="https://cdn2.iconfinder.com/data/icons/weather-flat-14/64/weather02-1024.png"
-              width="50px"
-              alt="icon"
-              className="icon"
-            />
-          </div>
-          <div className="col">
-            <p>Sat</p>
-            <img
-              src="https://cdn2.iconfinder.com/data/icons/weather-flat-14/64/weather02-1024.png"
-              width="50px"
-              alt="icon"
-              className="icon"
-            />
-          </div>
-          <div className="col">
-            <p>Sun</p>
-            <img
-              src="https://cdn2.iconfinder.com/data/icons/weather-flat-14/64/weather02-1024.png"
-              width="50px"
-              alt="icon"
-              className="icon"
-            />
-          </div>
-          <div className="col">
-            <p>Mon</p>
-            <img
-              src="https://cdn2.iconfinder.com/data/icons/weather-flat-14/64/weather02-1024.png"
-              width="50px"
-              alt="icon"
-              className="icon"
-            />
-          </div>
-          <div className="col">
-            <p>Tue</p>
-            <img
-              src="https://cdn2.iconfinder.com/data/icons/weather-flat-14/64/weather02-1024.png"
-              width="50px"
-              alt="icon"
-              className="icon"
-            />
-          </div>
-        </div>
-      </div>
     </div>
   );
 }
