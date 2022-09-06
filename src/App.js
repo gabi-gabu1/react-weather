@@ -67,7 +67,7 @@ export default function Weather(props) {
 
         <p className="open-source">
           <a
-            href="https://github.com/gabi-gabu1/weather-app"
+            href="https://github.com/gabi-gabu1/react-weather"
             target="_blank"
             rel="noreferrer"
           >
