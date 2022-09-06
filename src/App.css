@@ -78,3 +78,6 @@ a:link {
 .forecast-temperature-min {
   opacity: 0.5;
 }
+.source-code-author {
+  margin-left: 2px;
+}

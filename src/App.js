@@ -73,7 +73,7 @@ export default function Weather(props) {
           >
             Open-source code
           </a>
-          by Gabriela Dontamsetti
+          <span className="source-code-author">by Gabriela Dontamsetti</span>
         </p>
       </div>
     );
